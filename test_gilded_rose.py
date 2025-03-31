@@ -13,15 +13,18 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(0, items[0].quality)
         self.assertEqual(-1, items[0].sell_in)
-        items = [Item("foo", 8, 50)]
-        gilded_rose.update_quality()
-        self.assertEqual(7, items[0].name)
-        self.assertEqual(50, items[0].quality)
         items = [Item("foo", 8, 30)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(7, items[0].sell_in)
+        self.assertEqual(29, items[0].quality)
+        items = [Item("foo", 8, 30)]
+        gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(7, items[0].sell_in)
         self.assertEqual(29, items[0].quality)
         items = [Item("foo", 0, 30)]
+        gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(-1, items[0].sell_in)
         self.assertEqual(28, items[0].quality)
@@ -72,10 +75,12 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(5, items[0].sell_in)
         self.assertEqual(25, items[0].quality)
         items = [Item("Backstage passes", 1, 50)]
+        gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-1, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(0, items[0].quality)
         items = [Item("Backstage passes", 5, 50)]
+        gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEqual(4, items[0].sell_in)
         self.assertEqual(50, items[0].quality)
@@ -87,7 +92,13 @@ class GildedRoseTest(unittest.TestCase):
         items = [Item("Conjured", 5 , 10)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(3, items[0].sell_in)
-        self.assertEqual()
+        self.assertEqual(4, items[0].sell_in)
+        self.assertEqual(8, items[0].quality)
+        items = [Item("Conjured", -1 , 10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(6, items[0].quality)
+
 if __name__ == '__main__':
     unittest.main()
